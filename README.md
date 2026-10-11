@@ -32,7 +32,7 @@ The module enables the GCP APIs it needs on your project automatically (`compute
 
 ```hcl
 module "clawworker" {
-  source = "github.com/clawworker/terraform-selfhost?ref=v0.2.0"
+  source = "github.com/commandlyne/terraform-selfhost?ref=v0.2.0"
 
   project_id          = "my-tenant-project"
   region              = "us-central1"           # must match the platform's region
@@ -122,4 +122,4 @@ This module follows semver. Pin to a tag (`ref=v0.1.0`) in production. The platf
 
 ## Support
 
-Issues / discussions: this repo. For the platform side or onboarding wizard questions, file in `clawworker/control-panel`.
+Issues / discussions: this repo. For the platform side or onboarding wizard questions, file in `commandlyne/control-panel`.
