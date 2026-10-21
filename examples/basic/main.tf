@@ -23,7 +23,7 @@ provider "google" {
   region  = var.region
 }
 
-module "clawworker" {
+module "selfhost" {
   source = "../.."
 
   project_id                   = var.project_id
@@ -33,12 +33,18 @@ module "clawworker" {
   content_bucket_name_override = var.content_bucket_name_override
 }
 
-output "content_bucket_name" {
-  value = module.clawworker.content_bucket_name
+# Keeps state for anyone who applied this example before the rename.
+moved {
+  from = module.clawworker
+  to   = module.selfhost
 }
 
-# Pass this to the ClawWorker onboarding wizard. Run:
+output "content_bucket_name" {
+  value = module.selfhost.content_bucket_name
+}
+
+# Pass this to the CommandLyne onboarding wizard. Run:
 #   terraform output -json onboarding_payload
 output "onboarding_payload" {
-  value = module.clawworker.onboarding_payload
+  value = module.selfhost.onboarding_payload
 }

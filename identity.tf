@@ -1,7 +1,7 @@
 resource "google_service_account" "impersonator" {
   project      = var.project_id
   account_id   = "${var.resource_prefix}-control-panel-impersonator"
-  display_name = "ClawWorker control-panel impersonator"
+  display_name = "CommandLyne control-panel impersonator"
   description  = "Platform impersonates this SA via IAM Credentials API. Removing platform_can_impersonate revokes access."
 
   depends_on = [module.apis]
@@ -10,7 +10,7 @@ resource "google_service_account" "impersonator" {
 resource "google_service_account" "agent" {
   project      = var.project_id
   account_id   = "${var.resource_prefix}-agent"
-  display_name = "ClawWorker agent runtime"
+  display_name = "CommandLyne agent runtime"
 
   depends_on = [module.apis]
 }
