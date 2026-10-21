@@ -1,6 +1,6 @@
 # terraform-selfhost
 
-Terraform module that provisions the GCP-side infrastructure for hosting ClawWorker agents in your own Google Cloud project. The platform (control-panel) reaches into your project via service-account impersonation and a Private Service Connect endpoint — no long-lived secrets, no shared VPC, fully revocable.
+Terraform module that provisions the GCP-side infrastructure for hosting CommandLyne agents in your own Google Cloud project. The platform (control-panel) reaches into your project via service-account impersonation and a Private Service Connect endpoint — no long-lived secrets, no shared VPC, fully revocable.
 
 ## What this creates
 
@@ -24,14 +24,14 @@ Nothing is created in the platform's project; nothing is created outside the reg
 
 - A GCP project where you have `Owner` (easiest) or `Editor` + `Project IAM Admin` + `Service Usage Admin` (the last is needed for the module to enable required APIs on your behalf).
 - Local Terraform >= 1.5 and `gcloud auth application-default login` completed.
-- The **platform project ID** and **platform SA email** from the ClawWorker onboarding wizard.
+- The **platform project ID** and **platform SA email** from the CommandLyne onboarding wizard.
 
 The module enables the GCP APIs it needs on your project automatically (`compute`, `iam`, `iamcredentials`, `servicenetworking`, `storage`, `logging`, `monitoring`). It does **not** disable them on `terraform destroy` — your other workloads using those APIs aren't affected by a teardown of this module.
 
 ## Usage
 
 ```hcl
-module "clawworker" {
+module "selfhost" {
   source = "github.com/commandlyne/terraform-selfhost?ref=v0.2.0"
 
   project_id          = "my-tenant-project"
@@ -41,7 +41,7 @@ module "clawworker" {
 }
 
 output "onboarding_payload" {
-  value = module.clawworker.onboarding_payload
+  value = module.selfhost.onboarding_payload
 }
 ```
 
@@ -61,7 +61,7 @@ terraform apply -var content_bucket_name_override=my-chosen-name
 
 Any valid GCS bucket name works: 3–63 characters, lowercase letters, numbers and hyphens.
 
-Then paste the output of `terraform output -json onboarding_payload` into the ClawWorker onboarding wizard. The platform validates connectivity, creates its consumer PSC endpoint, and flips your org to self-hosted mode.
+Then paste the output of `terraform output -json onboarding_payload` into the CommandLyne onboarding wizard. The platform validates connectivity, creates its consumer PSC endpoint, and flips your org to self-hosted mode.
 
 There's a minimal working example in [`examples/basic/`](examples/basic).
 
